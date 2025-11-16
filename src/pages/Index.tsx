@@ -379,9 +379,6 @@ const Index = () => {
               <a href="#" className="text-white/70 hover:text-secondary transition-colors">
                 <Icon name="Linkedin" size={24} />
               </a>
-              <a href="#" className="text-white/70 hover:text-secondary transition-colors">
-                <Icon name="Twitter" size={24} />
-              </a>
             </div>
           </div>
         </div>
