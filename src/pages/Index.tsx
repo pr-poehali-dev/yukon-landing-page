@@ -1,11 +1,16 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import Icon from '@/components/ui/icon';
+import { useToast } from '@/hooks/use-toast';
 
 const Index = () => {
   const [activeNav, setActiveNav] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const { toast } = useToast();
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -14,6 +19,15 @@ const Index = () => {
       setActiveNav(id);
       setMobileMenuOpen(false);
     }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    toast({
+      title: "Message sent!",
+      description: "We'll get back to you soon.",
+    });
+    setFormData({ name: '', email: '', message: '' });
   };
 
   return (
@@ -275,24 +289,54 @@ const Index = () => {
           <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto">
             If you're planning market expansion, seeking a trusted e-commerce partner, or ready to scale your presence, we would love to talk.
           </p>
-          <div className="bg-muted rounded-lg p-12">
-            <div className="flex justify-center mb-8">
-              <div className="flex items-start gap-4">
-                <Icon name="Mail" className="text-primary mt-1" size={24} />
-                <div>
-                  <h3 className="font-bold text-lg mb-2">Email</h3>
-                  <a href="mailto:ky@yukon.ltd.uk" className="text-muted-foreground hover:text-primary transition-colors">
-                    ky@yukon.ltd.uk
-                  </a>
+          <div className="bg-muted rounded-lg p-8 md:p-12">
+            <form onSubmit={handleSubmit} className="max-w-2xl mx-auto space-y-6">
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <Input
+                    placeholder="Your Name"
+                    value={formData.name}
+                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                    required
+                    className="bg-white"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Input
+                    type="email"
+                    placeholder="Your Email"
+                    value={formData.email}
+                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                    required
+                    className="bg-white"
+                  />
                 </div>
               </div>
+              <div className="space-y-2">
+                <Textarea
+                  placeholder="Tell us about your brand and how we can help..."
+                  value={formData.message}
+                  onChange={(e) => setFormData({...formData, message: e.target.value})}
+                  required
+                  className="bg-white min-h-32"
+                />
+              </div>
+              <Button 
+                type="submit"
+                size="lg" 
+                className="bg-primary text-secondary hover:bg-primary/90 text-lg px-8 py-6 w-full md:w-auto"
+              >
+                Send Message
+              </Button>
+            </form>
+            <div className="flex justify-center mt-8 pt-8 border-t border-border">
+              <div className="flex items-center gap-3">
+                <Icon name="Mail" className="text-primary" size={20} />
+                <a href="mailto:ky@yukon.ltd.uk" className="text-muted-foreground hover:text-primary transition-colors">
+                  ky@yukon.ltd.uk
+                </a>
+              </div>
             </div>
-            <Button 
-              size="lg" 
-              className="bg-primary text-secondary hover:bg-primary/90 text-lg px-8 py-6"
-            >
-              Get in Touch
-            </Button>
           </div>
         </div>
       </section>
