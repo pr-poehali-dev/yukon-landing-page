@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -11,6 +11,29 @@ const Index = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const { toast } = useToast();
+  const observerRef = useRef<IntersectionObserver | null>(null);
+
+  useEffect(() => {
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    const elements = document.querySelectorAll('.scroll-reveal');
+    elements.forEach((el) => observerRef.current?.observe(el));
+
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+    };
+  }, []);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -112,7 +135,7 @@ const Index = () => {
         <div className="container mx-auto max-w-6xl">
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-primary">What We Do</h2>
           <div className="grid md:grid-cols-3 gap-8">
-            <Card className="p-8 hover:shadow-lg transition-shadow border-2 border-primary/10">
+            <Card className="p-8 hover:shadow-lg transition-shadow border-2 border-primary/10 scroll-reveal" style={{ transitionDelay: '0ms' }}>
               <div className="w-14 h-14 bg-primary rounded-lg flex items-center justify-center mb-6">
                 <Icon name="Store" className="text-secondary" size={28} />
               </div>
@@ -122,7 +145,7 @@ const Index = () => {
               </p>
             </Card>
 
-            <Card className="p-8 hover:shadow-lg transition-shadow border-2 border-primary/10">
+            <Card className="p-8 hover:shadow-lg transition-shadow border-2 border-primary/10 scroll-reveal" style={{ transitionDelay: '150ms' }}>
               <div className="w-14 h-14 bg-primary rounded-lg flex items-center justify-center mb-6">
                 <Icon name="Network" className="text-secondary" size={28} />
               </div>
@@ -132,7 +155,7 @@ const Index = () => {
               </p>
             </Card>
 
-            <Card className="p-8 hover:shadow-lg transition-shadow border-2 border-primary/10">
+            <Card className="p-8 hover:shadow-lg transition-shadow border-2 border-primary/10 scroll-reveal" style={{ transitionDelay: '300ms' }}>
               <div className="w-14 h-14 bg-primary rounded-lg flex items-center justify-center mb-6">
                 <Icon name="Users" className="text-secondary" size={28} />
               </div>
@@ -150,7 +173,7 @@ const Index = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-12 text-primary">Our Monobrand D2C Approach</h2>
           
           <div className="space-y-12">
-            <div className="bg-white rounded-lg p-8 md:p-12 shadow-md">
+            <div className="bg-white rounded-lg p-8 md:p-12 shadow-md scroll-reveal" style={{ transitionDelay: '0ms' }}>
               <div className="flex items-start gap-6">
                 <div className="w-16 h-16 bg-secondary rounded-lg flex items-center justify-center flex-shrink-0">
                   <Icon name="ShoppingBag" className="text-primary" size={32} />
@@ -179,7 +202,7 @@ const Index = () => {
               </div>
             </div>
 
-            <div className="bg-white rounded-lg p-8 md:p-12 shadow-md">
+            <div className="bg-white rounded-lg p-8 md:p-12 shadow-md scroll-reveal" style={{ transitionDelay: '150ms' }}>
               <div className="flex items-start gap-6">
                 <div className="w-16 h-16 bg-secondary rounded-lg flex items-center justify-center flex-shrink-0">
                   <Icon name="Star" className="text-primary" size={32} />
@@ -212,7 +235,7 @@ const Index = () => {
               </div>
             </div>
 
-            <div className="bg-white rounded-lg p-8 md:p-12 shadow-md">
+            <div className="bg-white rounded-lg p-8 md:p-12 shadow-md scroll-reveal" style={{ transitionDelay: '300ms' }}>
               <div className="flex items-start gap-6">
                 <div className="w-16 h-16 bg-secondary rounded-lg flex items-center justify-center flex-shrink-0">
                   <Icon name="BarChart" className="text-primary" size={32} />
@@ -248,7 +271,7 @@ const Index = () => {
         <div className="container mx-auto max-w-6xl">
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-secondary">Why Brands Choose Us</h2>
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-8 hover:bg-white/15 transition-colors">
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-8 hover:bg-white/15 transition-colors scroll-reveal" style={{ transitionDelay: '0ms' }}>
               <Icon name="Shield" className="text-secondary mb-4" size={40} />
               <h3 className="text-2xl font-bold mb-3">We keep your brand intact</h3>
               <p className="text-white/90 text-lg">
@@ -256,7 +279,7 @@ const Index = () => {
               </p>
             </div>
 
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-8 hover:bg-white/15 transition-colors">
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-8 hover:bg-white/15 transition-colors scroll-reveal" style={{ transitionDelay: '150ms' }}>
               <Icon name="Heart" className="text-secondary mb-4" size={40} />
               <h3 className="text-2xl font-bold mb-3">We create real fan communities</h3>
               <p className="text-white/90 text-lg">
@@ -264,7 +287,7 @@ const Index = () => {
               </p>
             </div>
 
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-8 hover:bg-white/15 transition-colors">
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-8 hover:bg-white/15 transition-colors scroll-reveal" style={{ transitionDelay: '300ms' }}>
               <Icon name="Rocket" className="text-secondary mb-4" size={40} />
               <h3 className="text-2xl font-bold mb-3">We scale fast and sustainably</h3>
               <p className="text-white/90 text-lg">
@@ -272,7 +295,7 @@ const Index = () => {
               </p>
             </div>
 
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-8 hover:bg-white/15 transition-colors">
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-8 hover:bg-white/15 transition-colors scroll-reveal" style={{ transitionDelay: '450ms' }}>
               <Icon name="Award" className="text-secondary mb-4" size={40} />
               <h3 className="text-2xl font-bold mb-3">We work with brands that inspire loyalty</h3>
               <p className="text-white/90 text-lg">
