@@ -76,7 +76,7 @@ const Index = () => {
         )}
       </nav>
 
-      <section className="pt-32 pb-20 px-6 bg-gradient-to-b from-[#1e3a5f] to-[#2c5282] text-white">
+      <section className="pt-32 pb-20 px-6 bg-gradient-to-b from-[#1a3352] to-[#234166] text-white">
         <div className="container mx-auto max-w-5xl text-center animate-fade-in">
           <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
             Monobrand E-Commerce Distribution<br />for Ambitious Brands
