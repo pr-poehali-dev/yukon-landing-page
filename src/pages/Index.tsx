@@ -5,12 +5,14 @@ import Icon from '@/components/ui/icon';
 
 const Index = () => {
   const [activeNav, setActiveNav] = useState('');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
       setActiveNav(id);
+      setMobileMenuOpen(false);
     }
   };
 
@@ -36,7 +38,28 @@ const Index = () => {
               </button>
             ))}
           </div>
+          <button
+            className="md:hidden text-primary"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            <Icon name={mobileMenuOpen ? 'X' : 'Menu'} size={28} />
+          </button>
         </div>
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-white border-t border-border">
+            <div className="container mx-auto px-6 py-4 flex flex-col gap-4">
+              {['about', 'services', 'benefits', 'contact'].map((item) => (
+                <button
+                  key={item}
+                  onClick={() => scrollToSection(item)}
+                  className="text-left text-sm font-semibold uppercase tracking-wide transition-colors text-foreground hover:text-primary py-2"
+                >
+                  {item === 'about' ? 'About Us' : item === 'services' ? 'Services' : item === 'benefits' ? 'Benefits' : 'Contact'}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </nav>
 
       <section className="pt-32 pb-20 px-6 bg-gradient-to-b from-[#1e3a5f] to-[#2c5282] text-white">
@@ -253,22 +276,13 @@ const Index = () => {
             If you're planning market expansion, seeking a trusted e-commerce partner, or ready to scale your presence, we would love to talk.
           </p>
           <div className="bg-muted rounded-lg p-12">
-            <div className="grid md:grid-cols-2 gap-8 text-left mb-8">
+            <div className="flex justify-center mb-8">
               <div className="flex items-start gap-4">
                 <Icon name="Mail" className="text-primary mt-1" size={24} />
                 <div>
                   <h3 className="font-bold text-lg mb-2">Email</h3>
-                  <a href="mailto:hello@yukon-ltd.com" className="text-muted-foreground hover:text-primary transition-colors">
-                    hello@yukon-ltd.com
-                  </a>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <Icon name="Phone" className="text-primary mt-1" size={24} />
-                <div>
-                  <h3 className="font-bold text-lg mb-2">Phone</h3>
-                  <a href="tel:+1234567890" className="text-muted-foreground hover:text-primary transition-colors">
-                    +1 (234) 567-890
+                  <a href="mailto:ky@yukon.ltd.uk" className="text-muted-foreground hover:text-primary transition-colors">
+                    ky@yukon.ltd.uk
                   </a>
                 </div>
               </div>
